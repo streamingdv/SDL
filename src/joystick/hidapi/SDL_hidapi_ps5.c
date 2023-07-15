@@ -26,7 +26,7 @@
 #include "../SDL_sysjoystick.h"
 #include "SDL_hidapijoystick_c.h"
 #include "SDL_hidapi_rumble.h"
- #include <stdio.h>
+#include <stdio.h>
 
 #ifdef SDL_JOYSTICK_HIDAPI_PS5
 
