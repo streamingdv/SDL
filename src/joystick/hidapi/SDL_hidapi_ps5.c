@@ -271,7 +271,6 @@ static int ReadFeatureReport(SDL_hid_device *dev, Uint8 report_id, Uint8 *report
 
 static SDL_bool HIDAPI_DriverPS5_IsSupportedDevice(SDL_HIDAPI_Device *device, const char *name, SDL_GamepadType type, Uint16 vendor_id, Uint16 product_id, Uint16 version, int interface_number, int interface_class, int interface_subclass, int interface_protocol)
 {
-    SDL_Log( "!!! HIDAPI_DriverPS5_IsSupportedDevice!\n" );
     Uint8 data[USB_PACKET_LENGTH];
     int size;
 
@@ -283,15 +282,12 @@ static SDL_bool HIDAPI_DriverPS5_IsSupportedDevice(SDL_HIDAPI_Device *device, co
         if (device && device->dev) {
             size = ReadFeatureReport(device->dev, k_EPS5FeatureReportIdCapabilities, data, sizeof(data));
             if (size == 48 && data[2] == 0x28) {
-                SDL_Log( "!!! SDL_TRUE!\n" );
                 /* Supported third party controller */
                 return SDL_TRUE;
             } else {
-                SDL_Log( "!!! SDL_FALSE!\n" );
                 return SDL_FALSE;
             }
         } else {
-            SDL_Log( "!!! 1!\n" );
             /* Might be supported by this driver, enumerate and find out */
             return SDL_TRUE;
         }
@@ -301,7 +297,6 @@ static SDL_bool HIDAPI_DriverPS5_IsSupportedDevice(SDL_HIDAPI_Device *device, co
 
 static void SetLedsForPlayerIndex(DS5EffectsState_t *effects, int player_index)
 {
-    SDL_Log( "!!! SetLedsForPlayerIndex!\n" );
     /* This list is the same as what hid-sony.c uses in the Linux kernel.
        The first 4 values correspond to what the PS4 assigns.
     */
@@ -328,7 +323,6 @@ static void SetLedsForPlayerIndex(DS5EffectsState_t *effects, int player_index)
 
 static void SetLightsForPlayerIndex(DS5EffectsState_t *effects, int player_index)
 {
-    SDL_Log( "!!! SetLightsForPlayerIndex!\n" );
     static const Uint8 lights[] = {
         0x04,
         0x0A,
@@ -347,7 +341,6 @@ static void SetLightsForPlayerIndex(DS5EffectsState_t *effects, int player_index
 
 static SDL_bool HIDAPI_DriverPS5_InitDevice(SDL_HIDAPI_Device *device)
 {
-    SDL_Log( "!!! HIDAPI_DriverPS5_InitDevice!\n" );
     SDL_DriverPS5_Context *ctx;
     Uint8 data[USB_PACKET_LENGTH * 2];
     int size;
@@ -405,7 +398,6 @@ static SDL_bool HIDAPI_DriverPS5_InitDevice(SDL_HIDAPI_Device *device)
     }
 
     if (ctx->enhanced_mode) {
-        SDL_Log( "!!! enhanced_mode!\n" );
         /* Read the serial number (Bluetooth address in reverse byte order)
            This will also enable enhanced reports over Bluetooth
         */
@@ -761,7 +753,6 @@ static void HIDAPI_DriverPS5_TickleBluetooth(SDL_HIDAPI_Device *device)
 
 static void HIDAPI_DriverPS5_SetEnhancedMode(SDL_HIDAPI_Device *device, SDL_Joystick *joystick)
 {
-    SDL_Log( "!!! HIDAPI_DriverPS5_SetEnhancedMode!\n" );
     SDL_DriverPS5_Context *ctx = (SDL_DriverPS5_Context *)device->context;
 
     if (!ctx->enhanced_mode) {
@@ -828,7 +819,6 @@ static void HIDAPI_DriverPS5_SetDevicePlayerIndex(SDL_HIDAPI_Device *device, SDL
 
 static SDL_bool HIDAPI_DriverPS5_OpenJoystick(SDL_HIDAPI_Device *device, SDL_Joystick *joystick)
 {
-    SDL_Log( "!!! HIDAPI_DriverPS5_OpenJoystick!\n" );
     SDL_DriverPS5_Context *ctx = (SDL_DriverPS5_Context *)device->context;
 
     SDL_AssertJoysticksLocked();
@@ -1352,7 +1342,6 @@ static SDL_bool HIDAPI_DriverPS5_IsPacketValid(SDL_DriverPS5_Context *ctx, Uint8
 
 static SDL_bool HIDAPI_DriverPS5_UpdateDevice(SDL_HIDAPI_Device *device)
 {
-    SDL_Log( "!!! HIDAPI_DriverPS5_UpdateDevice!\n" );
     SDL_DriverPS5_Context *ctx = (SDL_DriverPS5_Context *)device->context;
     SDL_Joystick *joystick = NULL;
     Uint8 data[USB_PACKET_LENGTH * 2];
